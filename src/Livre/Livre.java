@@ -34,5 +34,13 @@ public class Livre {
     public void setAuteur(String auteur){
         this.auteur=auteur;
     }
-    
+
+    //Pour annee publication
+    public int getAnneePublication(){
+        return anneePublication;
+    }
+    public void setAnneePublication(int anneePublication){
+        this.anneePublication=anneePublication;
+    }
+
 }
