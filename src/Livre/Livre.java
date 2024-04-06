@@ -16,7 +16,7 @@ public class Livre {
         this.ISBN = ISBN;
     }
     //---------------------------------------
-    //Parties des getters er setters        |
+    //    Parties des getters er setters    |
     //---------------------------------------
 
     //Pour le titre
@@ -50,6 +50,12 @@ public class Livre {
     public void setISBN(String ISBN){
         this.ISBN=ISBN;
     }
-    
+
+    //Methode toString() pour afficher en details les infos du livre
+    public String toString(){
+        return "Infos du livre: \n"+ "Titre: " +titre+ ", "+ "Auteur: "+auteur+", "+ "Annee de publication: "+anneePublication+", "+"ISBN: "+ISBN+".";
+        
+    }
+
 
 }
