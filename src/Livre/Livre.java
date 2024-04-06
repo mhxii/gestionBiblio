@@ -51,10 +51,14 @@ public class Livre {
         this.ISBN=ISBN;
     }
 
+    //---------------------------------------
+    // FIN des parties de getters et setters |
+    //---------------------------------------
+
     //Methode toString() pour afficher en details les infos du livre
     public String toString(){
         return "Infos du livre: \n"+ "Titre: " +titre+ ", "+ "Auteur: "+auteur+", "+ "Annee de publication: "+anneePublication+", "+"ISBN: "+ISBN+".";
-        
+
     }
 
 
