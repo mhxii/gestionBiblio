@@ -26,5 +26,13 @@ public class Livre {
     public void setTitre(String titre){
         this.titre=titre;
     }
+
+    //Pour l'auteur
+    public String getAuteur(){
+        return auteur;
+    }    
+    public void setAuteur(String auteur){
+        this.auteur=auteur;
+    }
     
 }
