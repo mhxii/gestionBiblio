@@ -7,11 +7,55 @@ import Livre.Livre;
 public class Utilisateur {
 
     //Déclaration des attributs de la classe utilisateur
-    String nom ;
-    int numeroIdentification;
-    ArrayList<Livre> livresempruntes;
+    private String nom;
+    private int numeroIdentification;
+    private ArrayList<Livre> livresempruntes;
 
-    //
+    //Declarationdes methodes 
+
+    //Declarations des constructeur pour initialiser les attributs
+
+
+     public Utilisateur(String nom, int numeroIdentification){
+
+
+        this.nom= nom;
+        this.numeroIdentification= numeroIdentification;
+    }
+
+
+    //Declaration des getters et setters  du fait que les attibuts de la classe sont  à private
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) throws IllegalArgumentException {
+        // Vérification si le nom ne contient que des lettres 
+        if (!nom.matches("[a-zA-Z]+")) {       // sur cette ligne  [a-zA-Z]+ signiifie que nom contient seulement des lesttres miniscules et maniscules
+            throw new IllegalArgumentException("Le nom ne peut contenir que des lettres.");
+        }
+        this.nom = nom;
+    }
+
+    
+
+    
+    //methode pour emprunté unn livre 
+
+
+    public static void EmprunterLivre(){
+
+
+
+
+    }
+
+
+    }
+
+
+
 
 
 
@@ -20,4 +64,4 @@ public class Utilisateur {
    
 
 
-}
+
