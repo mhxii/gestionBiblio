@@ -1,5 +1,7 @@
 package Biblio;
 
+import Utilisateur.Utilisateur;
+import Livre.Livre;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
