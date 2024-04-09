@@ -54,14 +54,22 @@ public class Utilisateur {
     //methode pour retourner un livre
 
     public void SupprimerLivres(Livre livre) {
-        this.livresempruntes.remove(args)
-    }
+        this.livresempruntes.remove(livre);
 
     }
 
+    public void Afficherlivres() {
+        System.out.println("Voici les livres empruntés par l'utilisateur " + nom + ":");
+        for (Livre livre : livresempruntes) {
+            System.out.println("Titre: " + livre.getTitre()); //Ici la une méthode getTitre() provient du module Livre ou il a ete declare
+            
+        }
+    }
+    
 
 
 
+}
 
 
 
