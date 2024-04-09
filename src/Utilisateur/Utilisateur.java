@@ -38,8 +38,10 @@ public class Utilisateur {
         this.nom = nom;
     }
 
-    
+    public int getNumeroIdentification() {
 
+    return numeroIdentification;
+    }
     
     //methode pour emprunté unn livre 
 
