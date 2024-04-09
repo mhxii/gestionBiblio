@@ -46,13 +46,16 @@ public class Utilisateur {
     //methode pour emprunté unn livre 
 
 
-    public static void EmprunterLivre(){
+    public void EmprunterLivre(Livre livre ){
 
-
-
+        this.livresempruntes.add(livre);
 
     }
+    //methode pour retourner un livre
 
+    public void SupprimerLivres(Livre livre) {
+        this.livresempruntes.remove(args)
+    }
 
     }
 
