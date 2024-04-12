@@ -57,9 +57,9 @@ public class Livre {
 
     //Methode toString() pour afficher en details les infos du livre
     public String toString(){
-        return "Infos du livre: \n"+ "Titre: " +titre+ ", "+ "Auteur: "+auteur+", "+ "Annee de publication: "+anneePublication+", "+"ISBN: "+ISBN+".";
-
+        return String.format("| %-40s | %-25s | %-10d | %-15s |", titre, auteur, anneePublication, ISBN);
     }
+    
 
 
 }
