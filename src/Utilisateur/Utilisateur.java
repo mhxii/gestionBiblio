@@ -9,7 +9,7 @@ public class Utilisateur {
     //Déclaration des attributs de la classe utilisateur
     private String nom;
     private int numeroIdentification;
-    private ArrayList<Livre> livresempruntes;
+    private ArrayList<Livre> livresEmpruntes;
 
     //Declarationdes methodes 
 
@@ -18,7 +18,7 @@ public class Utilisateur {
 
      public Utilisateur(String nom, int numeroIdentification){
 
-
+        livresEmpruntes=new ArrayList<>();
         this.nom= nom;
         this.numeroIdentification= numeroIdentification;
     }
@@ -46,24 +46,33 @@ public class Utilisateur {
     //methode pour emprunté unn livre 
 
 
-    public void EmprunterLivre(Livre livre ){
+    public void empruntLivre(Livre livre ){
 
-        this.livresempruntes.add(livre);
+        livresEmpruntes.add(livre);
 
+    }
+
+    public ArrayList<Livre> getListeEmpruntes(){
+        return livresEmpruntes;
     }
     //methode pour retourner un livre
 
-    public void SupprimerLivres(Livre livre) {
-        this.livresempruntes.remove(livre);
+    public void supprimerLivres(Livre livre) {
+        this.livresEmpruntes.remove(livre);
 
     }
 
     public void Afficherlivres() {
-        System.out.println("Voici les livres empruntés par l'utilisateur " + nom + ":");
-        for (Livre livre : livresempruntes) {
-            System.out.println("Titre: " + livre.getTitre()); //Ici la une méthode getTitre() provient du module Livre ou il a ete declare
-            
+        System.out.println("------------------------------------------------------------------------------------------------------");
+        System.out.println("|LES LIVRES DE " + nom);
+        System.out.println("------------------------------------------------------------------------------------------------------");
+        System.out.println("| Titre                                    | Auteur                    | Année      | ISBN            |");
+        System.out.println("------------------------------------------------------------------------------------------------------");
+        for (Livre livre : livresEmpruntes) {
+            System.out.println(livre.toString());    
         }
+        System.out.println("------------------------------------------------------------------------------------------------------");
+
     }
     
 

@@ -8,12 +8,45 @@ import java.util.Scanner;
 
 public class Biblio {
     Scanner sc = new Scanner(System.in);
-    ArrayList<Livre> listeLivres;
-    HashMap<Utilisateur, ArrayList<Livre>> empruntsUtilisateurs;
+    private ArrayList<Livre> listeLivres;
+    private HashMap<Utilisateur, ArrayList<Livre>> empruntsUtilisateurs;
 
     public Biblio() {
         listeLivres = new ArrayList<>();
         empruntsUtilisateurs = new HashMap<>();
+    }
+
+    public void ajouterUtilisateur(String nom,int numeroIdentification) {
+        Utilisateur utilisateur=new Utilisateur(nom, numeroIdentification);
+        if (!empruntsUtilisateurs.containsKey(utilisateur)) {
+            empruntsUtilisateurs.put(utilisateur, utilisateur.getListeEmpruntes());
+            System.out.println("Utilisateur ajouté : " + utilisateur.getNom());
+        } else {
+            System.out.println("L'utilisateur existe déjà.");
+        }
+    }
+
+    public void listeUtilisateur(){
+        System.out.println("Liste des utilisateurs :");
+        for (Utilisateur utilisateur : empruntsUtilisateurs.keySet()) {
+            System.out.println(utilisateur.getNom());
+        }
+    }
+
+    public void emprunterLivre(int id, String ISBN) {
+
+        for (Utilisateur utilisateur : empruntsUtilisateurs.keySet()) {
+            if (utilisateur.getNumeroIdentification()==id) {
+                utilisateur.Afficherlivres();
+                // empruntsUtilisateurs.put(utilisateur, utilisateur.getListeEmpruntes());
+                for (Livre livre : listeLivres) {
+                    if (livre.getISBN().equals(ISBN)) {
+                    empruntsUtilisateurs.get(utilisateur).add(livre);
+                    }
+                }
+                utilisateur.Afficherlivres();
+            }
+        }
     }
 
     public Boolean ajouterLivre(String titre, String auteur, int anneePublication, String ISBN) {
@@ -45,8 +78,8 @@ public class Biblio {
         }
     }
     if(!trouve)
-        System.out.println("| AUCUN LIVRE TROUVE.");
-    System.out.println("------------------------------------------------------------------------------------------------------");
+        System.out.println("| AUCUN LIVRE TROUVE");
+        System.out.println("------------------------------------------------------------------------------------------------------");
     }
 
     public String enregistrerLivre(Utilisateur utilisateur, Livre livre) {
@@ -80,7 +113,8 @@ public class Biblio {
     }
 
     public void listeLivre(){
-        System.out.println("Liste des Livres");
+        System.out.println("------------------------------------------------------------------------------------------------------");
+        System.out.println("| Liste des Livres de la Bibliotheque");
         System.out.println("------------------------------------------------------------------------------------------------------");
         System.out.println("| Titre                                    | Auteur                    | Année      | ISBN            |");
         System.out.println("------------------------------------------------------------------------------------------------------");

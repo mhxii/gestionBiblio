@@ -14,6 +14,12 @@ public class App {
         Bibliotheque.ajouterLivre("Harry Potter à l'école des sorciers", "J.K. Rowling", 1997, "9782070643028");
         Bibliotheque.ajouterLivre("1984", "George Orwell", 1949, "9780451524935");
 
+        // INITIALISATION DE QUELQUES UTILISATEURS
+        Bibliotheque.ajouterUtilisateur("Mohamed SALL", 1);
+        Bibliotheque.ajouterUtilisateur("Mohamed MBAYE", 2);
+        Bibliotheque.ajouterUtilisateur("Babacar NDIAYE", 3);
+        Bibliotheque.ajouterUtilisateur("Amine DIAGNE", 4);
+
         System.out.println("Bienvenue dans la bibliothèque!");
         int choix;
         Scanner sc = new Scanner(System.in);
@@ -43,7 +49,14 @@ public class App {
                     sc.nextLine();
                     break;
                 case 2:
-                    // Demander à l'utilisateur ses informations et enregistrer l'emprunt
+                    System.out.println("Cette operation vous permet a un utilisateur d'emprunter un livre\n . Veuillez renseigner ses informations suivant :");
+                    System.out.print("Donnez le numero d'identification du client :");
+                    int id=sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("VERIFIONS LE LIVRE.\nEntrez le titre, l'auteur ou l'ISBN du livre: ");
+                    Bibliotheque.rechercherLivre(sc.nextLine());
+                    System.out.print("Entrez l'ISBN du livre à emprunter: ");
+                    Bibliotheque.emprunterLivre(id, sc.nextLine());
                     break;
                 case 3:
                     // Demander à l'utilisateur ses informations et enregistrer le retour
@@ -85,11 +98,16 @@ public class App {
                     System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
                     sc.nextLine();
                     break;
+                case 9:
+                    Bibliotheque.listeUtilisateur();
+                    System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
+                    sc.nextLine();
+                    break;
                 default:
                     System.out.println("Choix invalide. Veuillez réessayer.");
                     
             }
-     } while (choix != 9);
+     } while (choix != 10);
 
         sc.close();
   }
