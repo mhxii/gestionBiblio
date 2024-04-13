@@ -46,12 +46,12 @@ public class Biblio {
         boolean isGood=false;
         if(!utilisateur.getListeEmpruntes().isEmpty()){
             utilisateur.Afficherlivres();
-            System.out.print("Entrez l'ISBN du livre que "+utilisateur.getNom()+" souhaite retourner parmis ses livres : ");
+            System.out.print(". Veuillez renseigner ses informations suivant :\nEntrez l'ISBN du livre que "+utilisateur.getNom()+" souhaite retourner parmis ses livres : ");
                 String ISBN=sc.nextLine();
                 // empruntsUtilisateurs.put(utilisateur, utilisateur.getListeEmpruntes());
                 for (Livre livre : utilisateur.getListeEmpruntes()) {
                     if (livre.getISBN().equals(ISBN)) {
-                        if(livre.getEstEmprunte()==false){
+                        if(livre.getEstEmprunte()==true){
                             isGood=true;
                             livre.setEstEmprunte(false);
                             empruntsUtilisateurs.get(utilisateur).remove(livre);
@@ -106,14 +106,26 @@ public class Biblio {
 
 
     public Boolean ajouterLivre(String titre, String auteur, int anneePublication, String ISBN) {
-        Livre livre = new Livre(titre, auteur, anneePublication, ISBN);
-        listeLivres.add(livre);
-        return true;
+        Boolean ISBNexist=false;
+        for(Livre livre : listeLivres){
+            if(livre.getISBN()==ISBN){
+                ISBNexist=true;
+                //break;
+            }
+        }
+        if(ISBNexist==false){
+            Livre livre = new Livre(titre, auteur, anneePublication, ISBN);
+            listeLivres.add(livre);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public String supprimerLivre(String ISBN) {
     String ISBNconcerne = ISBN;
     // boolean auMoinsEmprunte=false;
+    listeLivre();
     for (Livre livre : listeLivres) {
     if(livre.getEstEmprunte()==true){
         return "Le livre ne peut pas etre supprimer";
@@ -151,7 +163,7 @@ public class Biblio {
         System.out.println("| TITRE                                    | AUTEUR                    | ANNEE      | ISBN            | DISPONIBLE      |");
         System.out.println("------------------------------------------------------------------------------------------------------------------------");
     for (Livre livre : listeLivres) {
-        if (livre.getISBN().equals(critere) || livre.getAuteur().equals(critere) || livre.getTitre().equals(critere)) {
+        if (livre.getISBN().equalsIgnoreCase(critere) || livre.getAuteur().equalsIgnoreCase(critere) || livre.getTitre().equalsIgnoreCase(critere)) {
             if(livre.getEstEmprunte()==false)
                 System.out.println(livre.toString()+livre.estDisponible());
             trouve=true;
@@ -219,14 +231,14 @@ public class Biblio {
                     break;
                 case 2:
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-                    System.out.println("Cette operation vous permet a "+utilisateur.getNom()+" de returner un livre\n . Veuillez renseigner ses informations suivant :");
+                    System.out.println("Cette operation permet a "+utilisateur.getNom()+" de retourner un livre\n");
                     retournerLivre(utilisateur);
                     System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
                     sc.nextLine();
                     break;
                 case 3:
                     new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-                    System.out.println("Cette operation vous permet a " +utilisateur.getNom() + "de cotiser la somme de 1000 FCFA.");
+                    System.out.println("Cette operation permet a " +utilisateur.getNom() + " de cotiser la somme de 1000 FCFA.");
                     System.out.print("Si vous avez recu la cotisation\n\t>>Taper [OUI] sinon Taper [NON] :");
                     if(sc.nextLine().equalsIgnoreCase("OUI")){
                         utilisateur.setCotisation(1000);

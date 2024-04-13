@@ -91,7 +91,8 @@ public class App {
                     String ISBN=sc.nextLine();
                     if(Bibliotheque.ajouterLivre(titre, auteur, anneePublication, ISBN)){
                         System.out.println("Livre d'ISBN : "+ISBN+" a ete ajoutee");
-                    }
+                    }else
+                        System.out.println("Livre d'ISBN : "+ISBN+" existe deja");
                     System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
                     sc.nextLine();
                     break;
