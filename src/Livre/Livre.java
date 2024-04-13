@@ -7,6 +7,7 @@ public class Livre {
     private String auteur;
     private int anneePublication;
     private String ISBN;
+    private boolean estEmprunte=false;
 
     // Constructeur pour initialiser les attributs
     public Livre(String titre, String auteur, int anneePublication, String ISBN){
@@ -49,6 +50,23 @@ public class Livre {
     }
     public void setISBN(String ISBN){
         this.ISBN=ISBN;
+    }
+
+    //Pour estEmprunte
+    
+    public boolean getEstEmprunte(){
+        return estEmprunte;
+    }
+
+    public void setEstEmprunte(boolean estEmprunte) {
+        this.estEmprunte = estEmprunte;
+    }
+
+    public String estDisponible(){
+        if(estEmprunte)
+            return String.format(" %-15s |","NON");
+        else
+            return String.format(" %-15s |","OUI");
     }
 
     //---------------------------------------

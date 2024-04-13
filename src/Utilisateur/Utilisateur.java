@@ -9,6 +9,7 @@ public class Utilisateur {
     //Déclaration des attributs de la classe utilisateur
     private String nom;
     private int numeroIdentification;
+    private int cotisation=0;
     private ArrayList<Livre> livresEmpruntes;
 
     //Declarationdes methodes 
@@ -62,9 +63,21 @@ public class Utilisateur {
 
     }
 
+    public Boolean peutEmprunter(){
+        return cotisation>=1000;
+    }
+
+    public void setCotisation(int cotisation) {
+        this.cotisation = cotisation;
+    }
+
+    public int getCotisation() {
+        return cotisation;
+    }
+
     public void Afficherlivres() {
         System.out.println("------------------------------------------------------------------------------------------------------");
-        System.out.println("|LES LIVRES DE " + nom);
+        System.out.println("|VOICI LA LISTE DES LIVRES EMPRUNTES DE " + nom);
         System.out.println("------------------------------------------------------------------------------------------------------");
         System.out.println("| Titre                                    | Auteur                    | Année      | ISBN            |");
         System.out.println("------------------------------------------------------------------------------------------------------");

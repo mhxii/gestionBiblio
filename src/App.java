@@ -3,6 +3,7 @@ import java.util.Scanner;
 import Biblio.Biblio;
 // import Biblio.Bibliotheque;
 import Livre.Livre;
+import Utilisateur.Utilisateur;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -20,22 +21,21 @@ public class App {
         Bibliotheque.ajouterUtilisateur("Babacar NDIAYE", 3);
         Bibliotheque.ajouterUtilisateur("Amine DIAGNE", 4);
 
-        System.out.println("Bienvenue dans la bibliothèque!");
-        int choix;
         Scanner sc = new Scanner(System.in);
+        int choix;
         do {
-
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            System.out.println("Bienvenue dans la bibliothèque!");
             System.out.println("Menu:");
             System.out.println("1. Rechercher un livre");
-            System.out.println("2. Emprunter un livre");
-            System.out.println("3. Retourner un livre"); 
-            System.out.println("4. Enregistrer un nouveau client");
-            System.out.println("5. Enregistrer cotisation client");
-            System.out.println("6. Ajouter un livre");
-            System.out.println("7. Supprimer un livre");
-            System.out.println("8. Liste des livres");
-            System.out.println("9. Afficher les statistiques de la bibliothèque");
-            System.out.println("10. Quitter");
+            System.out.println("2. Gerer client");
+            System.out.println("3. Enregistrer un nouveau client");
+            System.out.println("4. Ajouter un livre");
+            System.out.println("5. Supprimer un livre");
+            System.out.println("6. Liste des livres");
+            System.out.println("7. Liste des clients");
+            System.out.println("8. Afficher les statistiques de la bibliothèque");
+            System.out.println("9. Quitter");
             System.out.print("Choix: ");
             
             choix = sc.nextInt();
@@ -43,33 +43,42 @@ public class App {
 
              switch (choix) {
                 case 1:
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
                     System.out.print("Entrez le titre, l'auteur ou l'ISBN du livre à rechercher: ");
                     Bibliotheque.rechercherLivre(sc.nextLine());
                     System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
                     sc.nextLine();
                     break;
                 case 2:
-                    System.out.println("Cette operation vous permet a un utilisateur d'emprunter un livre\n . Veuillez renseigner ses informations suivant :");
-                    System.out.print("Donnez le numero d'identification du client :");
-                    int id=sc.nextInt();
-                    sc.nextLine();
-                    System.out.print("VERIFIONS LE LIVRE.\nEntrez le titre, l'auteur ou l'ISBN du livre: ");
-                    Bibliotheque.rechercherLivre(sc.nextLine());
-                    System.out.print("Entrez l'ISBN du livre à emprunter: ");
-                    Bibliotheque.emprunterLivre(id, sc.nextLine());
+                Boolean idFind=false;
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                    System.out.println("Cette operation vous permet de gerer un client\n . Veuillez renseigner ses informations suivant :");
+                    do{
+                        System.out.print("Donnez le numero d'identification du client :");
+                        int id=sc.nextInt();
+                        sc.nextLine();
+                        for(Utilisateur utilisateur : Bibliotheque.getEmpruntsUtilisateurs().keySet()){
+                            if(utilisateur.getNumeroIdentification()==id){
+                                idFind=true;
+                                Bibliotheque.menuClient(utilisateur);
+                            }
+                        }
+                        if(idFind==false)
+                            System.out.println("IDENTIFIANT INCORRECT.");
+                    }while (!idFind);
                     break;
                 case 3:
-                    // Demander à l'utilisateur ses informations et enregistrer le retour
-                    break;
-                case 4:
-                    
-                    break;
-                case 5:
-                    System.out.println("Merci d'avoir utilisé la bibliothèque. Au revoir!");
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                    System.out.println("Cette operation vous permet d'inscrire un nouveau client\n . Veuillez renseigner ses informations suivant :");
+                    System.out.print("Nom :");
+                    String nom=sc.nextLine();
+                    System.out.print("ID identification :");
+                    Bibliotheque.ajouterUtilisateur(nom, sc.nextInt());
                     System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
                     sc.nextLine();
                     break;
-                case 6:
+                case 4:
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
                     System.out.println("Cette operation vous permet d'ajouter un livre.\nVeuillez renseigner ses informations suivant :");
                     System.out.print("Titre :");
                     String titre=sc.nextLine();
@@ -86,28 +95,42 @@ public class App {
                     System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
                     sc.nextLine();
                     break;
-                case 7:
+                case 5:
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
                     System.out.println("Cette operation vous permet de supprimer un livre.\nVeuillez renseigner ses informations suivant :");
                     System.out.print("ISBN :");
                     System.out.println(Bibliotheque.supprimerLivre(sc.nextLine()));
                     System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
                     sc.nextLine();
                     break;
-                case 8:
+                case 6:
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
                     Bibliotheque.listeLivre();
                     System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
                     sc.nextLine();
                     break;
-                case 9:
+                case 7:
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
                     Bibliotheque.listeUtilisateur();
                     System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
                     sc.nextLine();
                     break;
+                case 8:
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                    Bibliotheque.listeUtilisateur();
+                    System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
+                    sc.nextLine();
+                    break;
+                case 9:
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                    System.out.println("BYE BYE ! Appuyez sur la touche (ENTRER) pour QUITTER");
+                    sc.nextLine();
+                    break;   
                 default:
                     System.out.println("Choix invalide. Veuillez réessayer.");
                     
             }
-     } while (choix != 10);
+     } while (choix != 9);
 
         sc.close();
   }
