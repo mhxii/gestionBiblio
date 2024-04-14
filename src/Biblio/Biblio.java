@@ -5,6 +5,7 @@ import Utilisateur.Utilisateur;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Biblio {
@@ -43,32 +44,36 @@ public class Biblio {
     }
 
     public void retournerLivre(Utilisateur utilisateur) {
-        boolean isGood=false;
-        if(!utilisateur.getListeEmpruntes().isEmpty()){
+        boolean isGood = false;
+        if (!utilisateur.getListeEmpruntes().isEmpty()) {
             utilisateur.Afficherlivres();
-            System.out.print(". Veuillez renseigner ses informations suivant :\nEntrez l'ISBN du livre que "+utilisateur.getNom()+" souhaite retourner parmis ses livres : ");
-                String ISBN=sc.nextLine();
-                // empruntsUtilisateurs.put(utilisateur, utilisateur.getListeEmpruntes());
-                for (Livre livre : utilisateur.getListeEmpruntes()) {
-                    if (livre.getISBN().equals(ISBN)) {
-                        if(livre.getEstEmprunte()==true){
-                            isGood=true;
-                            livre.setEstEmprunte(false);
-                            empruntsUtilisateurs.get(utilisateur).remove(livre);
-                            System.out.println("Retour reussie. Vous pouvez recuperer a le livre "+livre.getTitre());}
-                        // else{
-                        //     System.out.println("Ce livre n'est pas disponible.");
-
-                        // }
+            System.out.print(". Veuillez renseigner ses informations suivant :\nEntrez l'ISBN du livre que " + utilisateur.getNom() + " souhaite retourner parmi ses livres : ");
+            String ISBN = sc.nextLine();
+    
+            Iterator<Livre> iterator = utilisateur.getListeEmpruntes().iterator();
+            while (iterator.hasNext()) {
+                Livre livre = iterator.next();
+                if (livre.getISBN().equals(ISBN)) {
+                    if (livre.getEstEmprunte()) {
+                        isGood = true;
+                        livre.setEstEmprunte(false);
+                        empruntsUtilisateurs.get(utilisateur).remove(livre);
+                        System.out.println("Retour réussi. Vous pouvez récupérer le livre " + livre.getTitre());
+                        utilisateur.Afficherlivres();
+                        listeLivre();
+                        break; // Sortir de la boucle car le livre a été trouvé et retourné
                     }
                 }
+            }
             if (!isGood) {
-                // new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-                System.out.println("Ce livre n'a pas emprunté ce livre.");
-                retournerLivre(utilisateur);}
-        }else
-            System.out.println(utilisateur.getNom()+" n'a pas emprunté de livre");
+                System.out.println(utilisateur.getNom() + " n'a pas emprunté ce livre.");
+                retournerLivre(utilisateur);
+            }
+        } else {
+            System.out.println(utilisateur.getNom() + " n'a pas emprunté de livre.");
+        }
     }
+    
 
     public void emprunterLivre(Utilisateur utilisateur) throws InterruptedException, IOException {
         boolean isGood=false;
