@@ -12,14 +12,14 @@ public class App {
         // INITIALISATION DE QUELQUES LIVRES
         Bibliotheque.ajouterLivre("Le Seigneur des Anneaux", "J.R.R. Tolkien", 1954, "9782070342985");
         Bibliotheque.ajouterLivre("Le Seigneur des Anneaux", "J.R.R. Tolkien", 1954, "9782070343498");
-        Bibliotheque.ajouterLivre("Harry Potter a l'ecole des sorciers", "J.K. Rowling", 1997, "9782070643028");
+        Bibliotheque.ajouterLivre("Harry Potter", "J.K. Rowling", 1997, "9782070643028");
         Bibliotheque.ajouterLivre("1984", "George Orwell", 1949, "9780451524935");
 
         // INITIALISATION DE QUELQUES UTILISATEURS
-        Bibliotheque.ajouterUtilisateur("Mohamed SALL", 1);
-        Bibliotheque.ajouterUtilisateur("Mohamed MBAYE", 2);
-        Bibliotheque.ajouterUtilisateur("Babacar NDIAYE", 3);
-        Bibliotheque.ajouterUtilisateur("Amine DIAGNE", 4);
+        Bibliotheque.ajouterUtilisateur("Mohamed SALL");
+        Bibliotheque.ajouterUtilisateur("Mohamed MBAYE");
+        Bibliotheque.ajouterUtilisateur("Babacar NDIAYE");
+        Bibliotheque.ajouterUtilisateur("Amine DIAGNE");
 
         Scanner sc = new Scanner(System.in);
         int choix;
@@ -43,7 +43,7 @@ public class App {
 
              switch (choix) {
                 case 1:
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor(); // PERMET DE FAIRE UN CLEAR
                     System.out.print("Entrez le titre, l'auteur ou l'ISBN du livre à rechercher: ");
                     Bibliotheque.rechercherLivre(sc.nextLine());
                     System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
@@ -72,8 +72,8 @@ public class App {
                     System.out.println("Cette operation vous permet d'inscrire un nouveau client\n . Veuillez renseigner ses informations suivant :");
                     System.out.print("Nom :");
                     String nom=sc.nextLine();
-                    System.out.print("ID identification :");
-                    Bibliotheque.ajouterUtilisateur(nom, sc.nextInt());
+                    // System.out.print("ID identification :");
+                    Bibliotheque.ajouterUtilisateur(nom);
                     System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
                     sc.nextLine();
                     break;

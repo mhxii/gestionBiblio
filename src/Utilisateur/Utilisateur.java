@@ -62,7 +62,7 @@ public class Utilisateur {
         this.livresEmpruntes.remove(livre);
 
     }
-
+    // VERIFIER SI IL EST A JOUR SUR LES COTISATION OU N'A PAS DEPASSE 3 LIVRES
     public Boolean peutEmprunter(){
         return cotisation>=1000 && livresEmpruntes.size()<3;
     }
@@ -88,6 +88,9 @@ public class Utilisateur {
 
     }
     
+    public String toString(){
+        return String.format("| %-10s | %-40s | %-10d | %-15s |", numeroIdentification, nom, cotisation,livresEmpruntes.size());
+    }
 
 
 

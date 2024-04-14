@@ -25,9 +25,10 @@ public class Biblio {
     public ArrayList<Livre> getListeLivres() {
         return listeLivres;
     }
-
-    public void ajouterUtilisateur(String nom,int numeroIdentification) {
-        Utilisateur utilisateur=new Utilisateur(nom, numeroIdentification);
+                                // DEBUT DES METHODES UTILISATEURS
+// AJOUTER UN UTILISATEUR
+    public void ajouterUtilisateur(String nom) {
+        Utilisateur utilisateur=new Utilisateur(nom, empruntsUtilisateurs.size()+1);
         if (!empruntsUtilisateurs.containsKey(utilisateur)) {
             empruntsUtilisateurs.put(utilisateur, utilisateur.getListeEmpruntes());
             System.out.println("Utilisateur ajouté : " + utilisateur.getNom());
@@ -36,181 +37,21 @@ public class Biblio {
         }
     }
 
+// AFFICHER LISTE DES UTILISATEURS
     public void listeUtilisateur(){
-        System.out.println("Liste des utilisateurs :");
+        System.out.println("---------------------------------------------------------------------------------------");
+        System.out.println("|VOICI LA LISTE DES CLIENTS DE LA BIBLIOTHEQUE");
+        System.out.println("---------------------------------------------------------------------------------------");
+        System.out.println("| NUMERO ID  |                NOM                       | COTISATION | NOMBRE LIVRE    |");
+        System.out.println("---------------------------------------------------------------------------------------");
         for (Utilisateur utilisateur : empruntsUtilisateurs.keySet()) {
-            System.out.println(utilisateur.getNom());
+            System.out.println(utilisateur.toString());
         }
-    }
+        System.out.println("---------------------------------------------------------------------------------------");
 
-    public void retournerLivre(Utilisateur utilisateur) {
-        boolean isGood = false;
-        if (!utilisateur.getListeEmpruntes().isEmpty()) {
-            utilisateur.Afficherlivres();
-            System.out.print(". Veuillez renseigner ses informations suivant :\nEntrez l'ISBN du livre que " + utilisateur.getNom() + " souhaite retourner parmi ses livres : ");
-            String ISBN = sc.nextLine();
-    
-            Iterator<Livre> iterator = utilisateur.getListeEmpruntes().iterator();
-            while (iterator.hasNext()) {
-                Livre livre = iterator.next();
-                if (livre.getISBN().equals(ISBN)) {
-                    if (livre.getEstEmprunte()) {
-                        isGood = true;
-                        livre.setEstEmprunte(false);
-                        empruntsUtilisateurs.get(utilisateur).remove(livre);
-                        System.out.println("Retour réussi. Vous pouvez récupérer le livre " + livre.getTitre());
-                        // utilisateur.Afficherlivres();
-                        // listeLivre();
-                        break; // Sortir de la boucle car le livre a été trouvé et retourné
-                    }
-                }
-            }
-            if (!isGood) {
-                System.out.println(utilisateur.getNom() + " n'a pas emprunté ce livre.");
-                retournerLivre(utilisateur);
-            }
-        } else {
-            System.out.println(utilisateur.getNom() + " n'a pas emprunté de livre.");
-        }
     }
-    
+// MENU POUR UN CLIENT
 
-    public void emprunterLivre(Utilisateur utilisateur) throws InterruptedException, IOException {
-        boolean isGood=false;
-        if(utilisateur.peutEmprunter()==true){
-            do{
-
-                System.out.print("\t[VERIFICATION DES LIVRES DISPONIBLES]\nEntrez le titre, l'auteur du livre que le client souhaite emprunter: ");
-            }while(!rechercherLivreDispo(sc.nextLine()));
-                // rechercherLivre(sc.nextLine());
-                System.out.print("Entrez l'ISBN du livre à emprunter parmis ses livres disponibles: ");
-                String ISBN=sc.nextLine();
-                // empruntsUtilisateurs.put(utilisateur, utilisateur.getListeEmpruntes());
-                for (Livre livre : listeLivres) {
-                    if (livre.getISBN().equals(ISBN)) {
-                        if(livre.getEstEmprunte()==false){
-                            isGood=true;
-                            livre.setEstEmprunte(true);
-                            empruntsUtilisateurs.get(utilisateur).add(livre);
-                            System.out.println("Emprunt reussie. Vous pouvez remettre a "+utilisateur.getNom()+" le livre "+livre.getTitre());}
-                        // else{
-                        //     System.out.println("Ce livre n'est pas disponible.");
-
-                        // }
-                    }
-                }
-            if (!isGood) {
-                // new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-                System.out.println("Ce livre n'est pas disponible.");
-                emprunterLivre(utilisateur);
-            }
-        }else
-            System.out.println(utilisateur.getNom()+" a atteint le limite d'emprunt ou n'est pas a jour par rapport au cotisation. Donc il ne peut pas emprunter pour l'instant.");
-    }
-
-
-    public Boolean ajouterLivre(String titre, String auteur, int anneePublication, String ISBN) {
-        Boolean ISBNexist=false;
-        for(Livre livre : listeLivres){
-            if(livre.getISBN().equals(ISBN)){
-                ISBNexist=true;
-                break;
-            }
-        }
-        if(ISBNexist==false){
-            Livre livre = new Livre(titre, auteur, anneePublication, ISBN);
-            listeLivres.add(livre);
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public String supprimerLivre(String ISBN) {
-    String ISBNconcerne = ISBN;
-    // boolean auMoinsEmprunte=false;
-    // listeLivre();
-    for (Livre livre : listeLivres) {
-        if (livre.getISBN().equals(ISBNconcerne)) {
-            if(livre.getEstEmprunte()==true){
-                return "Ce livre a ete emprunte donc il ne peut pas etre supprimer ";
-            }
-            listeLivres.remove(livre);
-            return "Livre d'ISBN : "+ ISBN+ " a ete supprimee";
-        }
-    }
-    return "Ce livre n'existe pas.";
-    }
-
-    // Recherche livre
-    public void rechercherLivre(String critere) {
-        Boolean trouve=false;
-        System.out.println("------------------------------------------------------------------------------------------------------");
-        System.out.println("| TITRE                                    | AUTEUR                    | ANNEE      | ISBN            |");
-        System.out.println("------------------------------------------------------------------------------------------------------");
-    for (Livre livre : listeLivres) {
-        if (livre.getISBN().equalsIgnoreCase(critere) || livre.getAuteur().equalsIgnoreCase(critere) || livre.getTitre().equalsIgnoreCase(critere)) {
-            System.out.println(livre.toString());
-            trouve=true;
-        }
-    }
-    if(!trouve)
-        System.out.println("| AUCUN LIVRE TROUVE");
-        System.out.println("------------------------------------------------------------------------------------------------------");
-    }
-
-    // Recherche livre empruntable
-    public Boolean rechercherLivreDispo(String critere) {
-        Boolean trouve=false;
-        System.out.println("------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("| Liste des Livres disponible pour le motif :"+critere);
-        System.out.println("------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("| TITRE                                    | AUTEUR                    | ANNEE      | ISBN            | DISPONIBLE      |");
-        System.out.println("------------------------------------------------------------------------------------------------------------------------");
-    for (Livre livre : listeLivres) {
-        if (livre.getISBN().equalsIgnoreCase(critere) || livre.getAuteur().equalsIgnoreCase(critere) || livre.getTitre().equalsIgnoreCase(critere)) {
-            if(livre.getEstEmprunte()==false)
-                System.out.println(livre.toString()+livre.estDisponible());
-            trouve=true;
-        }
-    }
-    if(!trouve)
-        System.out.println("| AUCUN LIVRE TROUVE");
-        System.out.println("------------------------------------------------------------------------------------------------------------------------");
-    return trouve;
-    }
-
-    public String enregistrerLivre(Utilisateur utilisateur, Livre livre) {
-    String ISBNconcerne = livre.getISBN();
-    for (Livre livreExistant : listeLivres) {
-    if (livreExistant.getISBN().equals(ISBNconcerne)) {
-    ArrayList<Livre> emprunts = empruntsUtilisateurs.get(utilisateur);
-    if (emprunts == null) {
-    emprunts = new ArrayList<>();
-    empruntsUtilisateurs.put(utilisateur, emprunts);
-                }
-    emprunts.add(livreExistant);
-    return "Livre enregistré";
-    }
-        }
-        return "Ce livre est déjà emprunté";
-    }
-
-
-    public void listeLivre(){
-        System.out.println("------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("| Liste des Livres de la Bibliotheque");
-        System.out.println("------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("| TITRE                                    | AUTEUR                    | ANNEE      | ISBN            | DISPONIBLE      |");
-        System.out.println("------------------------------------------------------------------------------------------------------------------------");
-        
-        for(Livre livre : listeLivres){
-            System.out.println(livre.toString()+livre.estDisponible());
-        }
-        
-        System.out.println("------------------------------------------------------------------------------------------------------------------------");
-    }
-    
     public void menuClient(Utilisateur utilisateur) throws InterruptedException, IOException{
         int choix;
         do {
@@ -270,6 +111,169 @@ public class Biblio {
      } while (choix != 5);
     }
 
+                                        // FIN METHODE CLIENT
+
+                                        // DEBUT METHODE LIVRE
+
+// AJOUTER UN LIVRE
+    public Boolean ajouterLivre(String titre, String auteur, int anneePublication, String ISBN) {
+        Boolean ISBNexist=false;
+        for(Livre livre : listeLivres){
+            if(livre.getISBN().equals(ISBN)){
+                ISBNexist=true;
+                break;
+            }
+        }
+        if(ISBNexist==false){
+            Livre livre = new Livre(titre, auteur, anneePublication, ISBN);
+            listeLivres.add(livre);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+// SUPPRIMER UN LIVRE
+    public String supprimerLivre(String ISBN) {
+    String ISBNconcerne = ISBN;
+    // boolean auMoinsEmprunte=false;
+    // listeLivre();
+    for (Livre livre : listeLivres) {
+        if (livre.getISBN().equals(ISBNconcerne)) {
+            if(livre.getEstEmprunte()==true){
+                return "Ce livre a ete emprunte donc il ne peut pas etre supprimer ";
+            }
+            listeLivres.remove(livre);
+            return "Livre d'ISBN : "+ ISBN+ " a ete supprimee";
+        }
+    }
+    return "Ce livre n'existe pas.";
+    }
+
+// RECHERCHER LIVRE
+    public void rechercherLivre(String critere) {
+        Boolean trouve=false;
+        System.out.println("------------------------------------------------------------------------------------------------------");
+        System.out.println("| TITRE                                    | AUTEUR                    | ANNEE      | ISBN            |");
+        System.out.println("------------------------------------------------------------------------------------------------------");
+    for (Livre livre : listeLivres) {
+        if (livre.getISBN().equalsIgnoreCase(critere) || livre.getAuteur().equalsIgnoreCase(critere) || livre.getTitre().equalsIgnoreCase(critere)) {
+            System.out.println(livre.toString());
+            trouve=true;
+        }
+    }
+    if(!trouve)
+        System.out.println("| AUCUN LIVRE TROUVE");
+        System.out.println("------------------------------------------------------------------------------------------------------");
+    }
+
+// RECHERCHER LIVRE EMPRUNTABLE
+    public Boolean rechercherLivreDispo(String critere) {
+        Boolean trouve=false;
+        System.out.println("------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("| Liste des Livres disponible pour le motif :"+critere);
+        System.out.println("------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("| TITRE                                    | AUTEUR                    | ANNEE      | ISBN            | DISPONIBLE      |");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------");
+    for (Livre livre : listeLivres) {
+        if (livre.getISBN().equalsIgnoreCase(critere) || livre.getAuteur().equalsIgnoreCase(critere) || livre.getTitre().equalsIgnoreCase(critere)) {
+            if(livre.getEstEmprunte()==false) // AFFICHE LA LIVRE SI ELLE N'EST PAS EMPRUNTE PAR UN CLIENT
+                System.out.println(livre.toString()+livre.estDisponible());
+            trouve=true;
+        }
+    }
+    if(!trouve)
+        System.out.println("| AUCUN LIVRE TROUVE");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------");
+    return trouve;
+    }
+
+// LISTE DES LIVRES DE LA BIBLIOTHEQUE
+    public void listeLivre(){
+        System.out.println("------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("| Liste des Livres de la Bibliotheque");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("| TITRE                                    | AUTEUR                    | ANNEE      | ISBN            | DISPONIBLE      |");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------");
+        
+        for(Livre livre : listeLivres){
+            System.out.println(livre.toString()+livre.estDisponible());
+        }
+        
+        System.out.println("------------------------------------------------------------------------------------------------------------------------");
+    }
+    
+                                // FIN METHODE LIVRE
+
+                                // DEBUT METHODE CONCERNANT LIVRE ET UTILISATEUR
+// RETOURNE D'UN LIVRE PAR UN UTILISATEUR
+    public void retournerLivre(Utilisateur utilisateur) {
+        boolean isGood = false;// isGood VA VERIFER SI LE LIVRE A ETE RETROUVE
+        if (!utilisateur.getListeEmpruntes().isEmpty()) {// VERIFIE SI LA LISTE DE SES EMPRUNTS EST VIDE
+            utilisateur.Afficherlivres();
+            System.out.print(". Veuillez renseigner ses informations suivant :\nEntrez l'ISBN du livre que " + utilisateur.getNom() + " souhaite retourner parmi ses livres : ");
+            String ISBN = sc.nextLine();
+            // Iterator me permet de parcourir de parcourir la liste des livre et de supprimer un livre au lieu de 
+            //[for (Livre livre : utilisateur.getListeEmpruntes())] qui va generer l'exception ConcurrentModificationException
+            Iterator<Livre> iterator = utilisateur.getListeEmpruntes().iterator();
+            while (iterator.hasNext()) {
+                Livre livre = iterator.next();
+                if (livre.getISBN().equals(ISBN)) {
+                    if (livre.getEstEmprunte()) {
+                        isGood = true;
+                        livre.setEstEmprunte(false);// REMET LE STATUT DU LIVRE A N'EST PAS EMPRUNTE
+                        empruntsUtilisateurs.get(utilisateur).remove(livre);// RETIRE LE LIVRE DE LA LISTE DES EMPRUNTS DE L'UTILISATEUR
+                        System.out.println("Retour réussi. Vous pouvez récupérer le livre " + livre.getTitre());
+                        // utilisateur.Afficherlivres();
+                        // listeLivre();
+                        break; // Sortir de la boucle car le livre a été trouvé et retourné
+                    }
+                }
+            }
+            if (!isGood) {
+                System.out.println(utilisateur.getNom() + " n'a pas emprunté ce livre.");
+                retournerLivre(utilisateur);
+            }
+        } else {
+            System.out.println(utilisateur.getNom() + " n'a pas emprunté de livre.");
+        }
+    }
+    
+// EMPRUNT D'UN LIVRE PAR UN UTILISATEUR
+    public void emprunterLivre(Utilisateur utilisateur) throws InterruptedException, IOException {
+        boolean isGood=false; // isGood VA VERIFER SI LE LIVRE A ETE RETROUVE
+        if(utilisateur.peutEmprunter()==true){
+            do{
+
+                System.out.print("\t[VERIFICATION DES LIVRES DISPONIBLES]\nEntrez le titre, l'auteur du livre que le client souhaite emprunter: ");
+            }while(!rechercherLivreDispo(sc.nextLine()));
+                // rechercherLivre(sc.nextLine());
+                System.out.print("Entrez l'ISBN du livre à emprunter parmis ses livres disponibles: ");
+                String ISBN=sc.nextLine();
+                // empruntsUtilisateurs.put(utilisateur, utilisateur.getListeEmpruntes());
+                for (Livre livre : listeLivres) {
+                    if (livre.getISBN().equals(ISBN)) {
+                        if(livre.getEstEmprunte()==false){ // VERIFIE SI LE LIVRE EST EMPRUNTE
+                            isGood=true;
+                            livre.setEstEmprunte(true);
+                            empruntsUtilisateurs.get(utilisateur).add(livre);// AJOUTE LE LIVRE DE LA LISTE DES EMPRUNTS DE L'UTILISATEUR
+                            System.out.println("Emprunt reussie. Vous pouvez remettre a "+utilisateur.getNom()+" le livre "+livre.getTitre());}
+                        // else{
+                        //     System.out.println("Ce livre n'est pas disponible.");
+
+                        // }
+                    }
+                }
+            if (!isGood) {
+                // new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                System.out.println("Ce livre n'est pas disponible.");
+                emprunterLivre(utilisateur);
+            }
+        }else
+            System.out.println(utilisateur.getNom()+" a atteint le limite d'emprunt ou n'est pas a jour par rapport au cotisation. Donc il ne peut pas emprunter pour l'instant.");
+    }
+
+//AFFICHAGE STATISTIQUE BIBLIOTHEQUE
     public void afficherStatistiquesBibliotheque() {
         int nombreExemplairesEmpruntes = 0;
         for (Livre livre : listeLivres) {
