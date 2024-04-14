@@ -14,6 +14,8 @@ public class App {
         Bibliotheque.ajouterLivre("Le Seigneur des Anneaux", "J.R.R. Tolkien", 1954, "9782070343498");
         Bibliotheque.ajouterLivre("Harry Potter", "J.K. Rowling", 1997, "9782070643028");
         Bibliotheque.ajouterLivre("1984", "George Orwell", 1949, "9780451524935");
+        Bibliotheque.ajouterLivre("Crime et Chatiment", "Fyodor Dostoevsky", 1866, "9780679734505");
+        Bibliotheque.ajouterLivre("Le Petit Prince", "Antoine de Saint-Exupery", 1943, "9782070753747");
 
         // INITIALISATION DE QUELQUES UTILISATEURS
         Bibliotheque.ajouterUtilisateur("Mohamed SALL");
