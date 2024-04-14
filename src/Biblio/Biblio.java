@@ -31,9 +31,11 @@ public class Biblio {
         Utilisateur utilisateur=new Utilisateur(nom, empruntsUtilisateurs.size()+1);
         if (!empruntsUtilisateurs.containsKey(utilisateur)) {
             empruntsUtilisateurs.put(utilisateur, utilisateur.getListeEmpruntes());
-            System.out.println("Utilisateur ajouté : " + utilisateur.getNom());
+            System.out.println("Nouveau client : " + utilisateur.getNom());
+            // System.out.println("Numero identification : " + utilisateur.getNumeroIdentification());
+            System.out.println("VEUILLEZ LUI REMETTRE UNE CARTE MEMBRE ET Y INSCRIRE LE NOM ["+utilisateur.getNom()+"] ET LE NUMERO D'IDENTIFICATION ["+utilisateur.getNumeroIdentification()+"]");
         } else {
-            System.out.println("L'utilisateur existe déjà.");
+            System.out.println("Le client existe déjà.");
         }
     }
 
