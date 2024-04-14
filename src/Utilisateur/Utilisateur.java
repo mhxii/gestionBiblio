@@ -64,7 +64,7 @@ public class Utilisateur {
     }
 
     public Boolean peutEmprunter(){
-        return cotisation>=1000;
+        return cotisation>=1000 && livresEmpruntes.size()<3;
     }
 
     public void setCotisation(int cotisation) {

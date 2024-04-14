@@ -12,7 +12,7 @@ public class App {
         // INITIALISATION DE QUELQUES LIVRES
         Bibliotheque.ajouterLivre("Le Seigneur des Anneaux", "J.R.R. Tolkien", 1954, "9782070342985");
         Bibliotheque.ajouterLivre("Le Seigneur des Anneaux", "J.R.R. Tolkien", 1954, "9782070343498");
-        Bibliotheque.ajouterLivre("Harry Potter à l'école des sorciers", "J.K. Rowling", 1997, "9782070643028");
+        Bibliotheque.ajouterLivre("Harry Potter a l'ecole des sorciers", "J.K. Rowling", 1997, "9782070643028");
         Bibliotheque.ajouterLivre("1984", "George Orwell", 1949, "9780451524935");
 
         // INITIALISATION DE QUELQUES UTILISATEURS
@@ -99,7 +99,8 @@ public class App {
                 case 5:
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
                     System.out.println("Cette operation vous permet de supprimer un livre.\nVeuillez renseigner ses informations suivant :");
-                    System.out.print("ISBN :");
+                    Bibliotheque.listeLivre();
+                    System.out.print("ISBN du livre a supprimer:");
                     System.out.println(Bibliotheque.supprimerLivre(sc.nextLine()));
                     System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
                     sc.nextLine();
@@ -118,7 +119,7 @@ public class App {
                     break;
                 case 8:
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-                    Bibliotheque.listeUtilisateur();
+                    Bibliotheque.afficherStatistiquesBibliotheque();
                     System.out.println("Appuyez sur la touche (ENTRER) pour CONTINUER");
                     sc.nextLine();
                     break;

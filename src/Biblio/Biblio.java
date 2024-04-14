@@ -59,8 +59,8 @@ public class Biblio {
                         livre.setEstEmprunte(false);
                         empruntsUtilisateurs.get(utilisateur).remove(livre);
                         System.out.println("Retour réussi. Vous pouvez récupérer le livre " + livre.getTitre());
-                        utilisateur.Afficherlivres();
-                        listeLivre();
+                        // utilisateur.Afficherlivres();
+                        // listeLivre();
                         break; // Sortir de la boucle car le livre a été trouvé et retourné
                     }
                 }
@@ -99,14 +99,13 @@ public class Biblio {
                         // }
                     }
                 }
-                utilisateur.Afficherlivres();
             if (!isGood) {
                 // new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
                 System.out.println("Ce livre n'est pas disponible.");
                 emprunterLivre(utilisateur);
             }
         }else
-            System.out.println(utilisateur.getNom()+" n'est pas a jour par rapport au cotisation. Donc il ne peut pas emprunter pour l'instant.");
+            System.out.println(utilisateur.getNom()+" a atteint le limite d'emprunt ou n'est pas a jour par rapport au cotisation. Donc il ne peut pas emprunter pour l'instant.");
     }
 
 
@@ -130,14 +129,15 @@ public class Biblio {
     public String supprimerLivre(String ISBN) {
     String ISBNconcerne = ISBN;
     // boolean auMoinsEmprunte=false;
-    listeLivre();
+    // listeLivre();
     for (Livre livre : listeLivres) {
-    if(livre.getEstEmprunte()==true){
-        return "Le livre ne peut pas etre supprimer";
-    }else if (livre.getISBN().equals(ISBNconcerne)) {
-    listeLivres.remove(livre);
-    return "Livre d'ISBN : "+ ISBN+ " a ete supprimee";
-    }
+        if (livre.getISBN().equals(ISBNconcerne)) {
+            if(livre.getEstEmprunte()==true){
+                return "Ce livre a ete emprunte donc il ne peut pas etre supprimer ";
+            }
+            listeLivres.remove(livre);
+            return "Livre d'ISBN : "+ ISBN+ " a ete supprimee";
+        }
     }
     return "Ce livre n'existe pas.";
     }
@@ -270,16 +270,17 @@ public class Biblio {
      } while (choix != 5);
     }
 
-    // public void afficherStatistiquesBibliotheque() {
-    //     int nombreTotalLivres = listeLivres.size();
-    //     int nombreTotalExemplaires = 0;
-    //     for (Livre livre : listeLivres) {
-    //         nombreTotalExemplaires += livre.getNombreExemplaires();
-    //     }
-    //     System.out.println("Statistiques de la bibliothèque :");
-    //     System.out.println("- Nombre total de livres : " + nombreTotalLivres);
-    //     System.out.println("- Nombre total d'exemplaires empruntés : " + nombreTotalExemplaires);
-    // }
+    public void afficherStatistiquesBibliotheque() {
+        int nombreExemplairesEmpruntes = 0;
+        for (Livre livre : listeLivres) {
+            if(livre.getEstEmprunte()==true)
+            nombreExemplairesEmpruntes++;
+        }
+        System.out.println("Statistiques de la bibliothèque :");
+        System.out.println("- Nombre total de livres : " + listeLivres.size());
+        System.out.println("- Nombre total de client : " + empruntsUtilisateurs.size());
+        System.out.println("- Nombre total d'exemplaires empruntés : " + nombreExemplairesEmpruntes);
+    }
 
 }
 
