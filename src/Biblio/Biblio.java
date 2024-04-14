@@ -26,7 +26,7 @@ public class Biblio {
         return listeLivres;
     }
                                 // DEBUT DES METHODES UTILISATEURS
-// AJOUTER UN UTILISATEUR
+// AJOUTER UN UTILISATEUR : prend en parametre le nom du nouveaux client ,instancie l'utilisateur, verifie s'il n'existe pas et l'ajoute dans empruntsUtilisateur avec une liste de livre vide. 
     public void ajouterUtilisateur(String nom) {
         Utilisateur utilisateur=new Utilisateur(nom, empruntsUtilisateurs.size()+1);
         if (!empruntsUtilisateurs.containsKey(utilisateur)) {
@@ -39,7 +39,7 @@ public class Biblio {
         }
     }
 
-// AFFICHER LISTE DES UTILISATEURS
+// AFFICHER LISTE DES UTILISATEURS : affiche la liste des clients de la bibliotheque dans empruntsutilisateur a l'aide de la methode keySet() qui va retourne les utilisateurs
     public void listeUtilisateur(){
         System.out.println("---------------------------------------------------------------------------------------");
         System.out.println("|VOICI LA LISTE DES CLIENTS DE LA BIBLIOTHEQUE");
@@ -52,7 +52,7 @@ public class Biblio {
         System.out.println("---------------------------------------------------------------------------------------");
 
     }
-// MENU POUR UN CLIENT
+// MENU POUR UN CLIENT : prend en parametre un type utilisateur et affiche le menu de l'utilisateur concernee pour faire different fonctionnalite
 
     public void menuClient(Utilisateur utilisateur) throws InterruptedException, IOException{
         int choix;
@@ -117,7 +117,7 @@ public class Biblio {
 
                                         // DEBUT METHODE LIVRE
 
-// AJOUTER UN LIVRE
+// AJOUTER UN LIVRE : prend en parametre le titre ,auteur , annee et ISBN  du livre a ajouter puis verifie si l'isbn existe si oui met ISBN exist a true et la fonction va retourner false sinon true et va ajouter le livre dans listeLivre
     public Boolean ajouterLivre(String titre, String auteur, int anneePublication, String ISBN) {
         Boolean ISBNexist=false;
         for(Livre livre : listeLivres){
@@ -135,7 +135,7 @@ public class Biblio {
         }
     }
 
-// SUPPRIMER UN LIVRE
+// SUPPRIMER UN LIVRE : parametre ISBN retoure un String, il verifie dabord si le livre est present puis s'il est emprunte sionon il va supprimer le livre
     public String supprimerLivre(String ISBN) {
     String ISBNconcerne = ISBN;
     // boolean auMoinsEmprunte=false;
@@ -152,7 +152,7 @@ public class Biblio {
     return "Ce livre n'existe pas.";
     }
 
-// RECHERCHER LIVRE
+// RECHERCHER LIVRE : parametre critere de recherche et parcourt la liste des livre listeLivre , si il trouve le critere il affiche le ou les livres sinon il affiche rien
     public void rechercherLivre(String critere) {
         Boolean trouve=false;
         System.out.println("------------------------------------------------------------------------------------------------------");
@@ -169,7 +169,7 @@ public class Biblio {
         System.out.println("------------------------------------------------------------------------------------------------------");
     }
 
-// RECHERCHER LIVRE EMPRUNTABLE
+// RECHERCHER LIVRE EMPRUNTABLE : meme principe que rechercherLivre mais recherche les livres disponible pour un emprunt
     public Boolean rechercherLivreDispo(String critere) {
         Boolean trouve=false;
         System.out.println("------------------------------------------------------------------------------------------------------------------------");
@@ -190,7 +190,7 @@ public class Biblio {
     return trouve;
     }
 
-// LISTE DES LIVRES DE LA BIBLIOTHEQUE
+// LISTE DES LIVRES DE LA BIBLIOTHEQUE : affiche la liste des livre de la bibliotheque
     public void listeLivre(){
         System.out.println("------------------------------------------------------------------------------------------------------------------------");
         System.out.println("| Liste des Livres de la Bibliotheque");
@@ -208,10 +208,10 @@ public class Biblio {
                                 // FIN METHODE LIVRE
 
                                 // DEBUT METHODE CONCERNANT LIVRE ET UTILISATEUR
-// RETOURNE D'UN LIVRE PAR UN UTILISATEUR
+// RETOURNE D'UN LIVRE PAR UN UTILISATEUR : parametre l'utilisateur qui veut retourne un livre
     public void retournerLivre(Utilisateur utilisateur) {
         boolean isGood = false;// isGood VA VERIFER SI LE LIVRE A ETE RETROUVE
-        if (!utilisateur.getListeEmpruntes().isEmpty()) {// VERIFIE SI LA LISTE DE SES EMPRUNTS EST VIDE
+        if (!utilisateur.getListeEmpruntes().isEmpty()) {// VERIFIE SI LA LISTE DE SES EMPRUNTS N'EST PAS VIDE SI OUI IL EXECUTE LE CODE
             utilisateur.Afficherlivres();
             System.out.print(". Veuillez renseigner ses informations suivant :\nEntrez l'ISBN du livre que " + utilisateur.getNom() + " souhaite retourner parmi ses livres : ");
             String ISBN = sc.nextLine();
@@ -241,14 +241,14 @@ public class Biblio {
         }
     }
     
-// EMPRUNT D'UN LIVRE PAR UN UTILISATEUR
+// EMPRUNT D'UN LIVRE PAR UN UTILISATEUR : parametre l'utilisateur qui veut emprunte un livre et verifie d'abord si l'utilisateur peut emprunte un livre
     public void emprunterLivre(Utilisateur utilisateur) throws InterruptedException, IOException {
         boolean isGood=false; // isGood VA VERIFER SI LE LIVRE A ETE RETROUVE
         if(utilisateur.peutEmprunter()==true){
             do{
 
                 System.out.print("\t[VERIFICATION DES LIVRES DISPONIBLES]\nEntrez le titre, l'auteur du livre que le client souhaite emprunter: ");
-            }while(!rechercherLivreDispo(sc.nextLine()));
+            }while(!rechercherLivreDispo(sc.nextLine())); // RELANCE LA FONCTION SI IL NE TROUVE PAS LE LIVRE 
                 // rechercherLivre(sc.nextLine());
                 System.out.print("Entrez l'ISBN du livre à emprunter parmis ses livres disponibles: ");
                 String ISBN=sc.nextLine();
@@ -275,7 +275,7 @@ public class Biblio {
             System.out.println(utilisateur.getNom()+" a atteint le limite d'emprunt ou n'est pas a jour par rapport au cotisation. Donc il ne peut pas emprunter pour l'instant.");
     }
 
-//AFFICHAGE STATISTIQUE BIBLIOTHEQUE
+//AFFICHAGE STATISTIQUE BIBLIOTHEQUE : affiche les livres et utilisateur total etc..
     public void afficherStatistiquesBibliotheque() {
         int nombreExemplairesEmpruntes = 0;
         for (Livre livre : listeLivres) {

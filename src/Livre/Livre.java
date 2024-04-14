@@ -59,6 +59,7 @@ public class Livre {
         this.estEmprunte = estEmprunte;
     }
 
+    // VERIFIE LA DISPONIBILITE DU LIVRE
     public String estDisponible(){
         if(estEmprunte)
             return String.format(" %-15s |","NON");
