@@ -108,9 +108,9 @@ public class Biblio {
     public Boolean ajouterLivre(String titre, String auteur, int anneePublication, String ISBN) {
         Boolean ISBNexist=false;
         for(Livre livre : listeLivres){
-            if(livre.getISBN()==ISBN){
+            if(livre.getISBN().equals(ISBN)){
                 ISBNexist=true;
-                //break;
+                break;
             }
         }
         if(ISBNexist==false){
